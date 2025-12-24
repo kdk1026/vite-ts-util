@@ -40,8 +40,12 @@ export class SSEClient {
     };
   }
 
-  // 사용자 정의 이벤트 리스너 등록
-  public onn<T = any>(eventName: string, handler: SSEHandler<T>): void {
+  /**
+   * 사용자 정의 이벤트 리스너 등록
+   * @param eventName 
+   * @param handler 
+   */
+  public on<T = any>(eventName: string, handler: SSEHandler<T>): void {
     this.listeners.set(eventName, handler);
 
     if (this.eventSource) {
