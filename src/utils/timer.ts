@@ -22,7 +22,7 @@ export type SupportedLang = (typeof supportedLangs)[number];
  * 타이머
  * - 사용 예시
  *  timer(1800, 'ko',
- *      ({ minutes, seconds, label }) => {
+ *      ({ minutes, seconds, label }: TickPayload): => {
  *          console.log(`남은 시간: ${minutes}${label.min} ${seconds}${label.sec}`);
  *      },
  *      () => {

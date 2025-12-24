@@ -5,12 +5,14 @@
  */
 
 type SSEHandler<T = any> = (data: T) => void;
+type SSEErrorHandler = (error: Error, rawData?: string) => void;
 
 /**
  * 사용 예시
+ * interface MyData { message: string; id: number; }
  * const client = new SSEClient('http://localhost:8080/sse/subscribe?id=user123');
  * client.connect();
- * client.on('notification', (data) => {
+ * client.on<MyData>('notification', (data) => {
  *  console.log('notification received:', data);
  * });
  */
@@ -23,44 +25,52 @@ export class SSEClient {
     this.url = url;
   }
 
-  public connect(): EventSource {
+  public connect(): void {
+    if (this.eventSource) return;
+
     this.eventSource = new EventSource(this.url);
 
     // 기본 'message' 이벤트 처리
-    this.eventSource.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        const handler = this.listeners.get("message");
-        if ( handler ) {
-          handler(data);
-        }
-      } catch (e) {
-        console.error(`Failed to parse SSE data: ${e}`, event.data);
-      }
+    this.eventSource.onmessage = (event: MessageEvent) => {
+      this.executeHandler('message', event.data);
     };
 
-    return this.eventSource;
+    this.eventSource.onerror = (error) => {
+      console.error('SSE Connection Error:', error);
+    };
   }
 
   // 사용자 정의 이벤트 리스너 등록
   public onn<T = any>(eventName: string, handler: SSEHandler<T>): void {
-    if (eventName === "message") {
-      this.listeners.set("message", handler);
-    }
+    this.listeners.set(eventName, handler);
 
     if (this.eventSource) {
       this.eventSource.addEventListener(eventName, (event: Event) => {
         const messageEvent = event as MessageEvent;
-        try {
-          // 데이터 파싱 처리
-          const data: T = JSON.parse(messageEvent.data);
-          handler(data);
-        } catch (e) {
-          console.info(`Failed JSON parse: ${e}`);
-          // JSON이 아닌 경우 원본 데이터를 T 타입으로 간주하여 전달
-          handler(messageEvent.data as unknown as T);
-        }
+        this.executeHandler(eventName, messageEvent.data);
       });
+    }
+  }
+
+  private onErrorHandler?: SSEErrorHandler;
+
+  public onError(handler: SSEErrorHandler): void {
+    this.onErrorHandler = handler;
+  }
+
+  private executeHandler(eventName: string, rawData: any): void {
+    const handler = this.listeners.get(eventName);
+    if (!handler) return;
+
+    try {
+      const parsedData = JSON.parse(rawData);
+      handler(parsedData);
+    } catch (e) {
+      const error = e instanceof Error ? e : new Error('Unknown parsing error');
+
+      if ( this.onErrorHandler ) {
+        this.onErrorHandler(error, rawData);
+      }
     }
   }
 
