@@ -15,7 +15,7 @@ interface TickPayload {
     label: TimerLabel;
 }
 
-type SupportedLang = 'ko' | 'en' | 'ja' | 'zh';
+export type SupportedLang = 'ko' | 'en' | 'ja' | 'zh';
 
 /**
  * 타이머
@@ -29,7 +29,7 @@ type SupportedLang = 'ko' | 'en' | 'ja' | 'zh';
  *      }
  *  );
  * @param {number} totalSeconds 
- * @param {string} lang 
+ * @param {SupportedLang} lang 
  * @param {function } onTick 
  * @param {function } onEnd 
  */

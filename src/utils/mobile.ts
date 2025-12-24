@@ -36,7 +36,7 @@ export const isUserAgentMobile = (): boolean => {
     );
 };
 
-interface MobileOs {
+export interface MobileOs {
     Android: boolean,
     iOS: boolean
 }

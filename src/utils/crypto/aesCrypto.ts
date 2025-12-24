@@ -12,7 +12,7 @@ const secretKey = rawKey ? atob(rawKey) : null;
 const rawIv = sessionStorage.getItem('secondaryData');
 const iv = rawIv ? atob(rawIv) : null;
 
-interface EncryptResult {
+export interface EncryptResult {
     encryptedText: string;
     iv: string
 }

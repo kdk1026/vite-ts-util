@@ -47,7 +47,7 @@ export const getLocaleStorage = (localeCode: string, defaultString: string): str
     }
 };
 
-interface MyLocaleData {
+export interface MyLocaleData {
     chrctrCode: string,
     chrctrNm: string
 }
