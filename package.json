@@ -1,0 +1,24 @@
+{
+  "name": "vite-ts-util",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3",
+    "vite": "^7.2.4"
+  },
+  "dependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "axios": "^1.13.2",
+    "dayjs": "^1.11.19",
+    "dompurify": "^3.3.1",
+    "html-entities": "^2.6.0",
+    "jsencrypt": "^3.5.4",
+    "jwt-decode": "^4.0.0"
+  }
+}
