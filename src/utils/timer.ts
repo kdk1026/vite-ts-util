@@ -4,18 +4,19 @@
  * @version 1.0
  */
 
-interface TimerLabel {
+export interface TimerLabel {
     min: string;
     sec: string;
 }
 
-interface TickPayload {
+export interface TickPayload {
     minutes: number;
     seconds: number;
     label: TimerLabel;
 }
 
-export type SupportedLang = 'ko' | 'en' | 'ja' | 'zh';
+export const supportedLangs = ['ko', 'en', 'ja', 'zh'] as const;
+export type SupportedLang = (typeof supportedLangs)[number];
 
 /**
  * 타이머
@@ -29,9 +30,9 @@ export type SupportedLang = 'ko' | 'en' | 'ja' | 'zh';
  *      }
  *  );
  * @param {number} totalSeconds 
- * @param {SupportedLangEnum} lang 
- * @param {function } onTick 
- * @param {function } onEnd 
+ * @param {SupportedLang} lang 
+ * @param {(data: TickPayload) => void} onTick 
+ * @param {() => void} onEnd 
  */
 export const timer = (
     totalSeconds: number, 
