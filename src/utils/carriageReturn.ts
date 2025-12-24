@@ -14,7 +14,7 @@ const escapeHtml = (unsafe: string): string => {
 };
 
 export const changeBrTag = (content: string): string => {
-    if (typeof content !== 'string' || !content.trim()) {
+    if ( !content.trim() ) {
         return '';
     }
 

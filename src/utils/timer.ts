@@ -29,7 +29,7 @@ export type SupportedLang = 'ko' | 'en' | 'ja' | 'zh';
  *      }
  *  );
  * @param {number} totalSeconds 
- * @param {SupportedLang} lang 
+ * @param {SupportedLangEnum} lang 
  * @param {function } onTick 
  * @param {function } onEnd 
  */

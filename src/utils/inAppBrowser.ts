@@ -53,7 +53,7 @@ export const Kakaotalk = {
      * @param {useNavigate} navigate
      */
     openInExternalBrowserIfKakaoReact : (targetUrl: string, navigate: any): void => {
-        if ( typeof targetUrl !== 'string' || !targetUrl?.trim() ) {
+        if ( targetUrl?.trim() ) {
             console.error('targetUrl is empty or null.');
             return;
         }
@@ -84,7 +84,7 @@ export const Kakaotalk = {
      * @param {useRouter} router
      */
     openInExternalBrowserIfKakaoVue : (targetUrl: string, router: any): void => {
-        if ( typeof targetUrl !== 'string' || !targetUrl?.trim() ) {
+        if ( !targetUrl?.trim() ) {
             console.error('targetUrl is empty or null.');
             return;
         }
@@ -127,13 +127,8 @@ export const Line = {
      * @param {boolean} isLoad 
      */
     openInExternalBrowserIfLine : (targetUrl: string, isLoad: boolean): void => {
-        if ( typeof targetUrl !== 'string' || !targetUrl?.trim() ) {
+        if ( !targetUrl?.trim() ) {
             console.error('targetUrl is empty or null.');
-            return;
-        }
-
-        if ( typeof isLoad !== 'boolean' ) {
-            console.error('isLoad inValid');
             return;
         }
 
@@ -164,7 +159,7 @@ export const Line = {
      * @param {useNavigate} navigate
      */
     openInExternalBrowserIfLineReact : (targetUrl: string, navigate: any): void => {
-        if ( typeof targetUrl !== 'string' || !targetUrl?.trim() ) {
+        if ( !targetUrl?.trim() ) {
             console.error('targetUrl is empty or null.');
             return;
         }
@@ -201,7 +196,7 @@ export const Line = {
      * @param {useRouter} router
      */
     openInExternalBrowserIfLineVue : (targetUrl: string, router: any): void => {
-        if ( typeof targetUrl !== 'string' || !targetUrl?.trim() ) {
+        if ( !targetUrl?.trim() ) {
             console.error('targetUrl is empty or null.');
             return;
         }
@@ -255,13 +250,8 @@ export const Telegram = {
      * @param {boolean} isLoad 
      */
     openInExternalBrowserIfTelegram : (targetUrl: string, isLoad: boolean): void => {
-        if ( typeof targetUrl !== 'string' || !targetUrl?.trim() ) {
+        if ( !targetUrl?.trim() ) {
             console.error('targetUrl is empty or null.');
-            return;
-        }
-
-        if ( typeof isLoad !== 'boolean' ) {
-            console.error('isLoad inValid');
             return;
         }
 

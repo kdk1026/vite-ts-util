@@ -44,7 +44,7 @@ export const setCookie = (name: string, value: string, days: number, profile: st
     }
 
     if (path) {
-        if ( typeof path !== 'string' || !path.trim() ) {
+        if ( !path.trim() ) {
             console.error('path is empty or null.');
             return;
         }
@@ -55,7 +55,7 @@ export const setCookie = (name: string, value: string, days: number, profile: st
     }
 
     if (domain) {
-        if ( typeof domain !== 'string' || !domain.trim() ) {
+        if ( !domain.trim() ) {
             console.error('domain is empty or null.');
             return;
         }

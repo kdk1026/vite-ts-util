@@ -11,11 +11,6 @@
  * @returns 
  */
 export const sleep = (sec: number): void => {
-    if ( typeof sec !== 'number' ) {
-        console.error('`sec` must be a number.')
-        return;
-    }
-
     let start = Date.now(),
     now = start;
 

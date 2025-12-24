@@ -69,7 +69,7 @@ export const encrypt = (text: string): EncryptResult | undefined => {
  * @returns 
  */
 export const decrypt = (encryptedText: string, ivStr: null | string, isBase64Iv: boolean): string | undefined => {
-    if ( typeof encryptedText !== 'string' || !encryptedText?.trim() ) {
+    if ( !encryptedText?.trim() ) {
         console.error("복호화할 암호문은 유효한 문자열이어야 합니다.");
         return '';
     }
