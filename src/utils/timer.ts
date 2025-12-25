@@ -15,13 +15,18 @@ export interface TickPayload {
     label: TimerLabel;
 }
 
-export const supportedLangs = ['ko', 'en', 'ja', 'zh'] as const;
-export type SupportedLang = (typeof supportedLangs)[number];
+export const supportedLangs = {
+    ko: 'ko',
+    en: 'en',
+    ja: 'ja',
+    zh: 'zh'
+} as const;
+export type SupportedLang = typeof supportedLangs[keyof typeof supportedLangs];
 
 /**
  * 타이머
  * - 사용 예시
- *  timer(1800, 'ko',
+ *  timer(1800, supportedLangs.ko,
  *      ({ minutes, seconds, label }: TickPayload): => {
  *          console.log(`남은 시간: ${minutes}${label.min} ${seconds}${label.sec}`);
  *      },
