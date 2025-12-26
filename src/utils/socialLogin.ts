@@ -9,7 +9,7 @@ const Kakao = (window as any).Kakao;
 /**
  * @link https://developers.kakao.com/docs/latest/ko/kakaologin/js
  */
-export const KakaoLogin = {
+export const KakaoAuth = {
     /**
      * 카카오 로그인
      * 
@@ -95,7 +95,7 @@ export const KakaoLogin = {
  * @link https://developers.naver.com/docs/login/sdks/sdks.md
  * @description SDK 버전 2 (권장)
  */
-export const Naver = {
+export const NaverAuth = {
     /**
      * 네이버 로그인
      * @param {string} clientId 
