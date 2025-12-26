@@ -2,6 +2,7 @@
  * @author 김대광 <daekwang1026@gmail.com>
  * @since 2025.12.24
  * @version 1.0
+ * @description 매개변수 3개부터는 RORO 패턴 적용
  */
 
 /**
@@ -79,6 +80,13 @@ export const isCheckUserAgent = (checkString: string): boolean => {
     return agent.includes(checkString);
 };
 
+interface AndroidLinkUrlOptions {
+    host: string;
+    scheme: string;
+    packageName: string;
+    screen?: string;
+}
+
 /**
  * INTENT 방식 (Intent URI)
  * 
@@ -90,13 +98,14 @@ export const isCheckUserAgent = (checkString: string): boolean => {
  *      <category android:name="android.intent.category.BROWSABLE" />
  *      <data android:host="호스트" android:scheme="스키마" />
  *  </intent-filter>
- * @param {string} host 
- * @param {string} scheme 
- * @param {string} packageName 
- * @param {undefined|string} screen
+ * * @param {object} options
+ * @param {string} options.host 
+ * @param {string} options.scheme 
+ * @param {string} options.packageName 
+ * @param {undefined|string} options.screen
  * @returns 
  */
-export const makeAndroidAppLinkUrl = (host: string, scheme: string, packageName: string, screen?: string): string => {
+export const makeAndroidAppLinkUrl = ({host, scheme, packageName, screen = ''}: AndroidLinkUrlOptions = {} as AndroidLinkUrlOptions): string => {
     if ( !host || !scheme || !packageName ) {
         console.error('host, scheme, packageName are required.');
         return '';
@@ -109,6 +118,12 @@ export const makeAndroidAppLinkUrl = (host: string, scheme: string, packageName:
     }
 };
 
+interface IosLinkUrlOptions {
+    host: string;
+    scheme: string;
+    screen?: string;
+}
+
 /**
  * URL 스킴 방식
  * 
@@ -118,12 +133,13 @@ export const makeAndroidAppLinkUrl = (host: string, scheme: string, packageName:
  * 3. 'Identifier' 필드에 고유한 식별자를 입력합니다 (예: 'com.yourcompany.yourapp').
  * 4. 'URL Schemes' 필드에 사용할 스키마를 입력합니다 (예: 'your-app-scheme').
  * 여기에 입력된 스키마가 makeURLSchemeIOSAppLinkUrl 함수의 'scheme' 매개변수와 일치해야 합니다.
- * @param {string} host 
- * @param {string} scheme 
- * @param {undefined|string} screen
+ * * @param {object} options
+ * @param {string} options.host 
+ * @param {string} options.scheme 
+ * @param {undefined|string} options.screen
  * @returns 
  */
-export const makeURLSchemeIOSAppLinkUrl = (host: string, scheme: string, screen?: string): string => {
+export const makeURLSchemeIOSAppLinkUrl = ({host, scheme, screen = ''}: IosLinkUrlOptions = {} as IosLinkUrlOptions): string => {
     if ( !host || !scheme ) {
         console.error('host, scheme are required.');
         return '';
@@ -136,15 +152,22 @@ export const makeURLSchemeIOSAppLinkUrl = (host: string, scheme: string, screen?
     }
 };
 
+interface AppLinkUrlOptions {
+    androidUrl: string;
+    iosUrl: string;
+    iosAppStoreUrl: string;
+}
+
 /**
  * 앱링크 or 딥링크 실행
- * @param {string} androidUrl 
- * @param {string} iosUrl 
- * @param {string} iosAppStoreUrl 
+ * * @param {object} options
+ * @param {string} options.androidUrl 
+ * @param {string} options.iosUrl 
+ * @param {string} options.iosAppStoreUrl 
  * 
  * @link https://gomest.tistory.com/7
  */
-export const runAppLinkUrl = (androidUrl: string, iosUrl: string, iosAppStoreUrl: string): void => {
+export const runAppLinkUrl = ({androidUrl, iosUrl, iosAppStoreUrl}: AppLinkUrlOptions = {} as AppLinkUrlOptions): void => {
     if ( !androidUrl || !iosUrl || !iosAppStoreUrl ) {
         console.error('androidUrl, iosUrl, iosAppStoreUrl are required.');
         return;

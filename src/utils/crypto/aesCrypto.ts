@@ -2,6 +2,7 @@
  * @author 김대광 <daekwang1026@gmail.com>
  * @since 2025.12.24
  * @version 1.0
+ * @description 매개변수 3개부터는 RORO 패턴 적용
  */
 
 import CryptoJS from "crypto-js";
@@ -61,14 +62,21 @@ export const encrypt = (text: string): EncryptResult | undefined => {
     }
 }
 
+interface DecryptOptions {
+    encryptedText: string;
+    ivStr: string | null;
+    isBase64Iv: boolean;
+}
+
 /**
  * AES 복호화
- * @param {string} encryptedText 
- * @param {null|string} ivStr
- * @param {boolean} isBase64Iv
+ * * @param {object} options
+ * @param {string} options.encryptedText 
+ * @param {null|string} options.ivStr
+ * @param {boolean} [options.isBase64Iv=false]
  * @returns 
  */
-export const decrypt = (encryptedText: string, ivStr: null | string, isBase64Iv: boolean): string | undefined => {
+export const decrypt = ({encryptedText, ivStr, isBase64Iv}: DecryptOptions = {} as DecryptOptions): string | undefined => {
     if ( !encryptedText?.trim() ) {
         console.error("복호화할 암호문은 유효한 문자열이어야 합니다.");
         return '';

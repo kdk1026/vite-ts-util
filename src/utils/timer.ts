@@ -2,6 +2,7 @@
  * @author 김대광 <daekwang1026@gmail.com>
  * @since 2025.12.24
  * @version 1.0
+ * @description 매개변수 3개부터는 RORO 패턴 적용
  */
 
 export interface TimerLabel {
@@ -23,28 +24,35 @@ export const SUPPORTED_LANGS = {
 } as const;
 export type SupportedLang = typeof SUPPORTED_LANGS[keyof typeof SUPPORTED_LANGS];
 
+interface TimerOptions {
+    totalSeconds: number;
+    lang: SupportedLang;
+    onTick: (data: TickPayload) => void;
+    onEnd: () => void;
+}
+
+
 /**
  * 타이머
- * - 사용 예시
- *  timer(1800, SUPPORTED_LANGS.KO,
- *      ({ minutes, seconds, label }: TickPayload): => {
+ * * @param {object} options
+ * @param {number} options.totalSeconds 
+ * @param {SupportedLang} options.lang 
+ * @param {(data: TickPayload) => void} options.onTick 
+ * @param {() => void} options.onEnd
+ * 
+ * @example
+ *  timer({
+ *      totalSeconds: 1800,
+ *      lang: SUPPORTED_LANGS.KO,
+ *      onTick: ({ minutes, seconds, label }) => {
  *          console.log(`남은 시간: ${minutes}${label.min} ${seconds}${label.sec}`);
  *      },
- *      () => {
+ *      onEnd: () => {
  *          console.log('타이머 종료');
  *      }
- *  );
- * @param {number} totalSeconds 
- * @param {SupportedLang} lang 
- * @param {(data: TickPayload) => void} onTick 
- * @param {() => void} onEnd 
+ *  });
  */
-export const timer = (
-    totalSeconds: number, 
-    lang: SupportedLang, 
-    onTick: (data: TickPayload) => void, 
-    onEnd: () => void
-): void => {
+export const timer = ({totalSeconds, lang, onTick, onEnd}: TimerOptions = {} as TimerOptions): void => {
     const localeLabels: Record<SupportedLang, TimerLabel> = {
         ko: { min: '분', sec: '초' },
         en: { min: 'min', sec: 'sec' },

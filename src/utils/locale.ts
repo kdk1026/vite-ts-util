@@ -2,6 +2,7 @@
  * @author 김대광 <daekwang1026@gmail.com>
  * @since 2025.12.24
  * @version 1.0
+ * @description 매개변수 3개부터는 RORO 패턴 적용
  */
 
 import { decode } from "html-entities";
@@ -52,14 +53,21 @@ export interface MyLocaleData {
     chrctrNm: string
 }
 
+interface GetLocaleObjectOptions {
+    localeCode: string;
+    defaultString: string;
+    localeData: MyLocaleData[];
+}
+
 /**
  * 로케일 데이터에서 로케일 값 가져오기
- * @param {blank|string} localeCode 
- * @param {string} defaultString 
- * @param {MyLocaleData[]} localeData
+ * * @param {object} options
+ * @param {blank|string} options.localeCode 
+ * @param {string} options.defaultString 
+ * @param {MyLocaleData[]} options.localeData
  * @returns 
  */
-export const getLocaleRedux = (localeCode: string, defaultString: string, localeData: MyLocaleData[]): string | undefined => {
+export const getLocaleData = ({localeCode = '', defaultString, localeData}: GetLocaleObjectOptions = {} as GetLocaleObjectOptions): string | undefined => {
     if ( !localeCode || !localeData ) {
         return defaultString;
     }
