@@ -5,6 +5,8 @@
  * @description 매개변수 3개부터는 RORO 패턴 적용
  */
 
+import { isMobile } from "./mobile";
+
 declare global {
     interface Window {
         Kakao: any;
@@ -130,7 +132,7 @@ export const NaverAuth = {
             {
                 clientId: clientId,
                 callbackUrl: callbackUrl,
-                isPopup: true, /* 팝업을 통한 연동처리 여부 */
+                isPopup: !isMobile(), /* 팝업을 통한 연동처리 여부, 모바일 웹에서는 fasle면 네이버 앱을 통한 로그인 가능 */
                 loginButton: {color: "green", type: 3, height: 60} /* 로그인 버튼의 타입을 지정 */
             }
         );
