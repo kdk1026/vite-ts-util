@@ -5,36 +5,37 @@
  * @description 매개변수 3개부터는 RORO 패턴 적용
  */
 
+// UA-CH를 위한 간단한 인터페이스 정의
+interface NavigatorUAData {
+    readonly mobile: boolean;
+    readonly brands: Array<{ brand: string; version: string }>;
+    readonly platform: string;
+}
+
+// 기존 Navigator 인터페이스 확장
+interface NavigatorWithUAData extends Navigator {
+    userAgentData?: NavigatorUAData;
+}
+
 /**
  * 모바일 브라우저 여부 체크
  * @returns 
  */
 export const isMobile = (): boolean => {
-    if ( 'userAgentData' in navigator ) {
-        return (navigator as any).userAgentData.mobile;
+    const nav = navigator as NavigatorWithUAData;
+
+    // 최신 브라우저 표준 API 사용
+    if ( nav.userAgentData?.mobile !== undefined ) {
+        return nav.userAgentData.mobile;
     }
 
-    // userAgentData를 사용할 수 없는 경우 user agent 문자열을 분석합니다.
-    const userAgent = navigator.userAgent;
+    const ua = nav.userAgent.toLowerCase();
+    const isMobileUA = /android|iphone|ipad|ipod|blackberry|windows phone|webos/i.test(ua);
 
-    // 복잡도를 줄인 정규식 (정확도 저하 가능성 있음)
-    return /(mobile|android|iphone|ipod|ipad|windows phone)/i.test(userAgent);
-};
+    // iPadOS는 UserAgent가 Mac과 동일하므로 터치 포인트로 구분
+    const isIPadOS = (navigator.maxTouchPoints > 1 && /mac/i.test(ua));
 
-/**
- * 모바일 브라우저 여부 체크 (브라우저 모바일 모드도 모바일로 인식)
- * @returns 
- */
-export const isUserAgentMobile = (): boolean => {
-    const userAgent = navigator.userAgent || (window as any).opera || '';
-    
-    return (
-        /android/i.test(userAgent) ||
-        /iPad|iPhone|iPod/.test(userAgent) ||
-        /blackberry|bb10|playbook/i.test(userAgent) ||
-        /windows phone/i.test(userAgent) ||
-        /webos|touchpad|hpwos/i.test(userAgent)
-    );
+    return isMobileUA || isIPadOS;
 };
 
 export interface MobileOs {
