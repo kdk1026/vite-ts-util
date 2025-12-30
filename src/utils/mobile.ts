@@ -33,7 +33,7 @@ export const isMobile = (): boolean => {
     const isMobileUA = /android|iphone|ipad|ipod|blackberry|windows phone|webos/i.test(ua);
 
     // iPadOS는 UserAgent가 Mac과 동일하므로 터치 포인트로 구분
-    const isIPadOS = (navigator.maxTouchPoints > 1 && /mac/i.test(ua));
+    const isIPadOS = (nav.maxTouchPoints > 1 && /mac/i.test(ua));
 
     return isMobileUA || isIPadOS;
 };
