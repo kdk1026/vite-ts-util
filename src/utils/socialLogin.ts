@@ -13,7 +13,9 @@ declare global {
         naver: any;
     }
 }
-const Kakao = (window as any).Kakao;
+
+const Kakao = window.Kakao;
+const naver = window.naver;
 
 interface UserInfoWithKakaoOptions {
     accessToken: string;
@@ -25,6 +27,15 @@ interface UserInfoWithKakaoOptions {
  * @link https://developers.kakao.com/docs/latest/ko/kakaologin/js
  */
 export const KakaoAuth = {
+    /**
+     * 카카오 SDK 초기화
+     * @param {string} kakaoAppKey 
+     */
+    initKakao: (kakaoAppKey: string) => {
+        if ( !Kakao.isInitialized() ) {
+            Kakao.init(kakaoAppKey);
+        }
+    },
     /**
      * 카카오 로그인
      * 
@@ -101,6 +112,18 @@ export const KakaoAuth = {
         Kakao.Auth.logout(function() {
             logoutCallBack( Kakao.Auth.getAccessToken() );
         });
+    },
+    /**
+     * 모바일 웹에서 카카오톡이 설치되어 있으면 카카오톡을 통한 로그인
+     * - redirectUrl로 페이지가 이동하며, URL 뒤에 인가 코드를 백엔드 서버로 던짐
+     * - 서버에서는 REST API로 토큰 요청해서 응답
+     * @param {string} redirectUrl 
+     */
+    loginWithKakaoRedirect: (redirectUrl: string) => {
+        Kakao.Auth.authorize({
+            // // 카카오 개발자 콘솔에 등록한 Redirect URI
+            redirectUri: redirectUrl
+        })
     }
 };
 
@@ -128,7 +151,7 @@ export const NaverAuth = {
             return false;
         }
 
-        const naverLogin = new window.naver.LoginWithNaverId(
+        const naverLogin = new naver.LoginWithNaverId(
             {
                 clientId: clientId,
                 callbackUrl: callbackUrl,
@@ -147,7 +170,7 @@ export const NaverAuth = {
      * @returns
      * 
      * @example
-     * const naverLogin = Naver.loginWithNaverCallBack(clientId, callbackUrl); 
+     * const naverLogin = NaverAuth.loginWithNaverCallBack(clientId, callbackUrl); 
      * 
      * naverLogin.getLoginStatus(function (status) {
      *  if (status) {
@@ -181,7 +204,7 @@ export const NaverAuth = {
             return false;
         }
 
-        const naverLogin = new window.naver.LoginWithNaverId(
+        const naverLogin = new naver.LoginWithNaverId(
             {
                 clientId: clientId,
                 callbackUrl: callbackUrl,
