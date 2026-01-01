@@ -134,7 +134,7 @@ export const getCookie = (name: string): string | null => {
 
 interface SetCookieObjectOptions {
     name: string;
-    value: object;
+    value: Record<string, any>;
     days: number;
     profile: string;
     path?: string;
