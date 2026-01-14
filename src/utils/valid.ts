@@ -258,7 +258,37 @@ export const Format = {
     },
 
     /**
-     * 전화번호 형식 체크 (휴대폰 번호 제외)
+     * 전화번호 형식 체크
+     * - 휴대폰 번호
+     * - 일반 전화번호
+     * - 070 인터넷 전화(VoIP)
+     * - 080 수신자 부담 전화
+     * - 030, 050 평생번호 및 안심번호
+     * - 15xx, 16xx, 18xx 등 전국 대표번호
+     * @param {string} val 
+     * @returns 
+     */
+    isValidPhoneNum : (val: string): boolean => {
+        if ( !val?.trim() ) {
+            console.error('val is empty.');
+            return false;
+        }
+
+        return Format.isCellPhoneNum(val) 
+            || Format.isPhoneNum(val) 
+            || Format.isInternetPhoneNum(val) 
+            || Format.isTollFreePhoneNum(val) 
+            || Format.isVirtualPhoneNum(val) 
+            || Format.isBusinessPhoneNum(val);
+    },
+
+    /**
+     * 일반 전화번호 형식 체크
+     * - 02: 서울
+     * - 031: 경기, 032: 인천, 033: 강원
+     * - 041: 충남, 042: 대전, 043: 충북, 044: 세종
+     * - 051: 부산, 052: 울산, 053: 대구, 054: 경북, 055: 경남
+     * - 061: 전남, 062: 광주, 063: 전북, 064: 제주
      * @param {string} val 
      * @returns 
      */
@@ -268,9 +298,73 @@ export const Format = {
             return false;
         }
 
-        const phoneRegex = /^(02|03[1-3]|04[1-4]|05[1-5]|06[1-4])-?(\d{3,4})-?(\d{4})|^(070|050[2-7])-?(\d{4})-?(\d{4})|^(15|16|18)\d{2}-?(\d{4})$/;
+        const cellPhoneRegex = /^(02|03[1-3]|04[1-4]|05[1-5]|06[1-4])-?(\d{3,4})-?(\d{4})$/;
 
-        return phoneRegex.test(val);
+        return cellPhoneRegex.test(val);
+    },
+
+    /**
+     * 070 인터넷 전화(VoIP) 형식 체크
+     * @param {string} val 
+     * @returns 
+     */
+    isInternetPhoneNum : (val: string): boolean => {
+        if ( !val?.trim() ) {
+            console.error('val is empty.');
+            return false;
+        }
+
+        const cellPhoneRegex = /^070-?\d{3,4}-?\d{4}$/;
+
+        return cellPhoneRegex.test(val);
+    },
+
+    /**
+     * 080 수신자 부담 전화 형식 체크
+     * @param {string} val 
+     * @returns 
+     */
+    isTollFreePhoneNum : (val: string): boolean => {
+        if ( !val?.trim() ) {
+            console.error('val is empty.');
+            return false;
+        }
+
+        const cellPhoneRegex = /^080-?\d{3,4}-?\d{4}$/;
+
+        return cellPhoneRegex.test(val);
+    },
+
+    /**
+     * 030, 050 평생번호 및 안심번호 형식 체크
+     * @param {string} val 
+     * @returns 
+     */
+    isVirtualPhoneNum : (val: string): boolean => {
+        if ( !val?.trim() ) {
+            console.error('val is empty.');
+            return false;
+        }
+
+        const cellPhoneRegex = /^(030|050\d)-?\d{3,4}-?\d{4}$/;
+
+        return cellPhoneRegex.test(val);
+    },
+
+    /**
+     * 15xx, 16xx, 18xx 등 전국 대표번호 형식 체크
+     * @param {string} val 
+     * @returns 
+     */
+    isBusinessPhoneNum : (val: string): boolean => {
+        if ( !val?.trim() ) {
+            console.error('val is empty.');
+            return false;
+        }
+
+        const cellPhoneRegex = /^(15|16|18)\d{2}-?\d{4}$/;
+
+        return cellPhoneRegex.test(val);
     },
 
     /**
