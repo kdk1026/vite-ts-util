@@ -3,6 +3,7 @@
  * @since 2025.12.24
  * @version 1.0
  * @description 매개변수 3개부터는 RORO 패턴 적용
+ * @description js-cookie 라이브러리 미사용 버전
  */
 
 interface SetCookieOptions {
