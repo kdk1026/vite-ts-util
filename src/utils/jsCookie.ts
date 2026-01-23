@@ -1,3 +1,9 @@
+/**
+ * @author 김대광 <daekwang1026@gmail.com>
+ * @since 2026.01.23
+ * @version 1.0
+ */
+
 import Cookies from "js-cookie";
 
 const DEFAULT_OPTIONS: Cookies.CookieAttributes = {
