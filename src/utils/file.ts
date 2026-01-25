@@ -154,10 +154,11 @@ export const blobToBase64 = (fileByteArray: Blob, fileName: string): Promise<str
 };
 
 /**
- * PDF 새 탭으로 열기
- * @param {ArrayBuffer|Blob} data 
+ * 파일 크기를 바이트(Byte) 단위에서 사람이 읽기 쉬운 형식(B, KB, MB 등)으로 변환
  */
-export const openPdfInNewTab = (data: ArrayBuffer | Blob): void => {
-    const url = window.URL.createObjectURL(new Blob([data], { type: "application/pdf" }));
-    window.open(url, "_blank");
-};
+export const readableFileSize = (size: number): string => {
+    if (size == 0) return '0';
+    const arrDataUnits = ['B', 'KB', 'MB', 'GB', 'TB'];
+    const i = Number(Math.floor(Math.log(size) / Math.log(1024)));
+    return Math.round(size / Math.pow(1024, i)) + '' + arrDataUnits[i];
+}
