@@ -13,7 +13,7 @@ import dayjs from "dayjs";
  * @param {*} val 
  * @returns 
  */
-export const isEmpty = (val: unknown): boolean => {
+export const isEmpty = (val: any): boolean => {
     return (val === undefined || val === null || val === '');
 };
 
@@ -22,7 +22,7 @@ export const isEmpty = (val: unknown): boolean => {
  * @param {*} val 
  * @returns 
  */
-export const isBlank = (val: unknown): boolean => {
+export const isBlank = (val: any): boolean => {
     return (
 		val === undefined || 
 		val === null || 
@@ -73,7 +73,7 @@ export const isEmptyObject = (param: object): boolean => {
  * @param {Array<*>} param 
  * @returns 
  */
-export const isEmptyArray = (param: unknown[]): boolean => {
+export const isEmptyArray = (param: any[]): boolean => {
     return Array.isArray(param) && param.length === 0;
 };
 
@@ -100,7 +100,7 @@ export const Type = {
      * @param {*} val 
      * @returns 
      */
-    isNumber : (val: unknown): boolean => {
+    isNumber : (val: any): boolean => {
         if (val === null || val === undefined) {
             return false;
         }
