@@ -19,7 +19,7 @@ export const cookieUtil = {
      * @param {undefined|null|object} options 
      * @returns 
      */
-    set: (name: string, value: string, options?: Cookies.CookieAttributes) => {
+    set: (name: string, value: string, options?: Cookies.CookieAttributes): void => {
         if ( !name.trim() ) {
             console.error('name is empty or null.');
             return;
@@ -38,7 +38,7 @@ export const cookieUtil = {
      * @param {string} name 
      * @returns 
      */
-    get: (name: string) => {
+    get: (name: string): string | undefined => {
         if ( !name.trim() ) {
             console.error('name is empty or null.');
             return;
@@ -52,7 +52,7 @@ export const cookieUtil = {
      * @param {string} name 
      * @param {undefined|null|object} options 
      */
-    remove: (name: string, options?: Cookies.CookieAttributes) => {
+    remove: (name: string, options?: Cookies.CookieAttributes): void => {
         if ( !name.trim() ) {
             console.error('name is empty or null.');
             return;
@@ -67,7 +67,7 @@ export const cookieUtil = {
      * @param {object|any[]} value 
      * @param {undefined|null|object} options 
      */
-    setJSON: (name: string, value: object|any[], options?: Cookies.CookieAttributes, ) => {
+    setJSON: (name: string, value: object|any[], options?: Cookies.CookieAttributes): void => {
         if ( !name.trim() ) {
             console.error('name is empty or null.');
             return;
@@ -79,10 +79,14 @@ export const cookieUtil = {
             return;
         }
 
-        Cookies.set(name, JSON.stringify(value), {
-            ...DEFAULT_OPTIONS,
-            ...options,
-        });
+        try {
+            Cookies.set(name, JSON.stringify(value), {
+                ...DEFAULT_OPTIONS,
+                ...options,
+            });
+        } catch (error) {
+            console.error("JSON 문자열 변환 실패:", error);  
+        }
     },
 
     /**
@@ -90,13 +94,19 @@ export const cookieUtil = {
      * @param {string} name 
      * @returns 
      */
-    getJSON: (name: string) => {
+    getJSON: (name: string): string | undefined | null => {
         if ( !name.trim() ) {
             console.error('name is empty or null.');
             return;
         }
 
         const value = Cookies.get(name);
-        return value ? JSON.parse(value) : null;
+
+        try {
+            return value ? JSON.parse(value) : null;
+        } catch (error) {
+            console.error("JSON 문자열 변환 실패:", error);  
+            return null;
+        }
     },
 };
