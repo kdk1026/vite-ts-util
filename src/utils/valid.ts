@@ -37,7 +37,13 @@ export const isBlank = (val: any): boolean => {
  * @returns 
  */
 export const isNull = (val: any): boolean => {
-    return !val || val == 'undefined' || val.replaceAll(/ /gi, '') === '';
+    if ( !val || val === 'undefined' ) return true;
+
+    if ( typeof val === 'string' ) {
+        return val.trim().length === 0;
+    }
+    
+    return false;
 };
 
 interface LengthOverOptions {
