@@ -31,6 +31,15 @@ export const isBlank = (val: any): boolean => {
 	);
 };
 
+/**
+ * null, undefined, 빈 문자열, 공백, 'undefined' 체크
+ * @param {*} val 
+ * @returns 
+ */
+export const isNull = (val: any): boolean => {
+    return !val || val == 'undefined' || val.replaceAll(/ /gi, '') === '';
+};
+
 interface LengthOverOptions {
     val: string;
     minLen: number;
