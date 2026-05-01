@@ -8,30 +8,6 @@
 import dayjs from "dayjs";
 
 /**
- * null, undefined, 빈 문자열 모두 체크
- * - ( !val ) 으로 체크 가능 (권장)
- * @param {*} val 
- * @returns 
- */
-export const isEmpty = (val: any): boolean => {
-    return (val === undefined || val === null || val === '');
-};
-
-/**
- * null, undefined, 빈 문자열, 공백 모두 체크
- * @param {*} val 
- * @returns 
- */
-export const isBlank = (val: any): boolean => {
-    return (
-		val === undefined || 
-		val === null || 
-		val === '' || 
-		(typeof val === 'string' && val.replaceAll(/ /gi, '') === '')
-	);
-};
-
-/**
  * null, undefined, 빈 문자열, 공백, 'undefined' 체크
  * @param {*} val 
  * @returns 
