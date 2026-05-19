@@ -6,73 +6,94 @@
 
 /**
  * 객체나 배열을 얕은 복사
- * - 값 자체가 복사되는 것이 아니라 해당 값을 가리키는 참조 값이 복사
+ * - target 에 복사 및 병합
  * @param {object} source 
- * @param {object} target 
+ * @param {undefined|null|object} target 
  * @returns 
  */
-export const shallowCopy = (source: object, target: object = {}): object => {
+export const shallowCopy = (source: object, target?: object | null): object => {
+    if ( !target ) {
+        return { ...source };
+    }
+
     return Object.assign(target, source);
 };
 
 /**
- * 객체나 배열을 깊은 복사
- * @param {T} source 
+ * 객체나 배열을 얕은 복사하여 새로운 객체 생성
+ * - key가 중복될 경우, 가장 마지막에 쓴 값이 이전 값을 덮어씀
+ * - 전통적인 방식과 동일
+ *      Object.assign({}, source, target);
+ * @param {object} source 
+ * @param {undefined|null|object} source2 
+ * @returns 
  */
-export const deepCopy = <T extends Record<string, any>>(source: T): T => {
-    const target: any = Array.isArray(source) ? [] : {};
+export const shallowClone = (source: object, source2?: object | null): object => {
+    return {...source, ...source2};
+};
 
-    for (const key in source) {
-        if ( Object.hasOwn(source as object, key) ) {
-            target[key] = deepCopy((source as any)[key]);
-        }
-    }
-
-    return target as T;
+/**
+ * 객체나 배열을 깊은 복사
+ * - 전통적인 방식의 단점을 개선
+ * - 전통적인 방식의 단점 : 객체 내부에 함수(Function), Symbol, undefined가 
+ *      포함되어 있으면 복사되지 않고 누락되며 성능도 느림
+ *      JSON.parse(JSON.stringify(original));
+ * @param {object} source 
+ */
+export const deepCopy = <T>(source: T): T => {
+    return structuredClone(source);
 };
 
 /**
  * 두 객체를 병합
  * - source 객체의 속성을 target 객체에 깊게 병합
- * @param {T} target 
- * @param {S} source
+ * - target 객체의 내부를 비움
+ * @param {object} source
+ * @param {Record<keyof any, any>} target 
  * @returns 
  */
-export const deepMerge = <T extends Record<string, any>, S extends Record<string, any>>(
-    target: T,
-    source: S
-): T & S => {
-    const isObject = (obj: any): obj is Record<string, any> => 
-        obj !== null && typeof obj === 'object' && !Array.isArray(obj);
-
-    if ( !isObject(target) || !isObject(source) ) {
-        console.warn('Target or Source must be an object (excluding null and arrays)');
-        return target as T & S;
+export const deepClone = (source: object, target: Record<keyof any, any>): object => {
+    for ( const key in target ) {
+        if ( Object.hasOwn(target, key) ) {
+            delete (target as any)[key];
+        }
     }
 
-    const output = { ...target } as T & S;
+    const clonedSource = structuredClone(source);
+    Object.assign(target, clonedSource);
 
-    for (const key in source) {
+    return target;
+};
+
+/**
+ * 두 객체를 병합
+ * - source 객체의 속성을 target 객체에 깊게 병합
+ * - target 객체의 내부 유지
+ * @param {Record<keyof any, any>} source
+ * @param {Record<keyof any, any>} target 
+ * @returns 
+ */
+export const deepCloneKeeping = (source: Record<keyof any, any>, target: Record<keyof any, any>): object => {
+    if ( typeof source !== 'object' || source === null 
+            || typeof target !== 'object' || target === null ) {
+        console.warn('Both source and target must be objects (excluding null)');
+        return target;
+    }
+
+    for ( const key in source ) {
         if ( Object.hasOwn(source, key) ) {
-            const sourceValue = source[key];
-            const targetValue = (output as any)[key];
-
-            if ( isObject(sourceValue) ) {
-                (output as any)[key] = deepMerge(
-                    isObject(targetValue) ? targetValue : {},
-                    sourceValue
-                );
-            }  else if ( Array.isArray(sourceValue) ) {
-                (output as any)[key] = sourceValue.map((item: any) => {
-                    if ( isObject(item) ) return deepMerge({}, item);
-                    if ( Array.isArray(item) ) return [...item];
-                    return item;
-                });
+            if ( typeof source[key] === 'object' && source[key] !== null ) {
+                // source[key]가 객체인 경우, 재귀적으로 깊은 복사 진행
+                if ( !target[key] || typeof target[key] !== 'object' ) {
+                    // target에 해당 키가 없거나 객체가 아니라면 새 객체/배열 생성
+                    target[key] = Array.isArray(source[key]) ? [] : {};
+                }
+                deepCloneKeeping(source[key], target[key]);
             } else {
-                (output as any)[key] = sourceValue;
+                target[key] = source[key];
             }
         }
     }
-    
-    return output;
+
+    return target;
 };
