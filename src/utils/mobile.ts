@@ -188,9 +188,57 @@ export const runAppLinkUrl = ({androidUrl, iosUrl, iosAppStoreUrl}: AppLinkUrlOp
                 window.open(iosAppStoreUrl);
             }, 1000);
 
-            location.href = iosUrl;
+            window.location.href = iosUrl;
         }
     } else {
         console.log('모바일 플랫폼에서만 사용 가능합니다.');
     }
 };
+
+/**
+ * 기본 문자 앱 호출
+ * - 연락처, 문자 내용 설정된 상태로 문자 보내기 화면으로 이동 시킴
+ * @param {string} phoneNumber 
+ * @param {string} message 
+ * @returns 
+ */
+export const launchSmsApp = (phoneNumber: string, message: string): void => {
+    if ( isMobile() ) {
+        const mobileOs = isMobileOs();
+        const separator = mobileOs.iOS ? '&' : '?';
+    
+        const encodedMessage = encodeURIComponent(message || '');
+    
+        const smsUrl = `sms:${phoneNumber}${separator}body=${encodedMessage}`;
+    
+        window.location.href = smsUrl;
+    } else {
+        console.log('모바일 플랫폼에서만 사용 가능합니다.');
+    }
+};
+
+/**
+ * 다이얼(전화 걸기) 화면 호출
+ * - 연락처 설정된 상태로 다이얼 화면으로 이동 시킴
+ * @param {string} phoneNumber 
+ * @returns 
+ */
+export const launchDialer = (phoneNumber: string): void => {
+    if ( isMobile() ) {
+        const cleanNumber = phoneNumber.replace(/[^0-9+]/g, '');
+    
+        window.location.href = `tel:${cleanNumber}`;
+    } else {
+        console.log('모바일 플랫폼에서만 사용 가능합니다.');
+    }
+};
+
+/*
+    카메라 실행, 음성 녹음 실행도 가능하나
+    Frontend Framework 에서는 적합하지 않음
+    
+    https://github.com/kdk1026/JsUtilsKdk/blob/master/JsUtilsKdk/common.js
+
+        - CommonJS.Mobile
+            : runCamera, runCamcorder, runMicroPhone
+*/
