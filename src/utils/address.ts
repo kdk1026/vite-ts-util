@@ -1,4 +1,10 @@
 /**
+ * @author 김대광 <daekwang1026@gmail.com>
+ * @since 2026.08.11
+ * @version 1.0
+ */
+
+/**
  * 주소에서 시/도 추출
  * @param {string} addr 
  * @returns 
