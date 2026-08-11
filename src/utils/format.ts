@@ -16,7 +16,7 @@
  * @returns 
  */
 export const makePhoneNum = (value: string): string | null => {
-    if ( typeof value !== 'string' || !value?.trim() ) {
+    if ( !value?.trim() ) {
         console.warn('Invalid input value');
         return null;
     }
@@ -53,7 +53,7 @@ export const makePhoneNum = (value: string): string | null => {
  * @returns 
  */
 export const makeBasicPhoneNum = (value: string): string | null => {
-    if ( typeof value !== 'string' || !value?.trim() ) {
+    if ( !value?.trim() ) {
         console.warn('Invalid input value');
         return null;
     }
@@ -85,7 +85,7 @@ export const makeBasicPhoneNum = (value: string): string | null => {
  * @returns 
  */
 export const makeInternetPhoneNum = (value: string): string | null => {
-    if ( typeof value !== 'string' || !value?.trim() ) {
+    if ( !value?.trim() ) {
         console.warn('Invalid input value');
         return null;
     }
@@ -116,7 +116,7 @@ export const makeInternetPhoneNum = (value: string): string | null => {
  * @returns 
  */
 export const makeTollFreePhoneNum = (value: string): string | null => {
-    if ( typeof value !== 'string' || !value?.trim() ) {
+    if ( !value?.trim() ) {
         console.warn('Invalid input value');
         return null;
     }
@@ -147,7 +147,7 @@ export const makeTollFreePhoneNum = (value: string): string | null => {
  * @returns 
  */
 export const makeVirtualPhoneNum = (value: string): string | null => {
-    if ( typeof value !== 'string' || !value?.trim() ) {
+    if ( !value?.trim() ) {
         console.warn('Invalid input value');
         return null;
     }
@@ -178,7 +178,7 @@ export const makeVirtualPhoneNum = (value: string): string | null => {
  * @returns 
  */
 export const makeBusinessPhoneNum = (value: string): string | null => {
-    if ( typeof value !== 'string' || !value?.trim() ) {
+    if ( !value?.trim() ) {
         console.warn('Invalid input value');
         return null;
     }
@@ -202,7 +202,7 @@ export const makeBusinessPhoneNum = (value: string): string | null => {
  * @returns 
  */
 export const makeCellPhoneNum = (value: string): string | null => {
-    if ( typeof value !== 'string' || !value?.trim() ) {
+    if ( !value?.trim() ) {
         console.warn('Invalid input value');
         return null;
     }
@@ -233,7 +233,7 @@ export const makeCellPhoneNum = (value: string): string | null => {
  * @returns 
  */
 export const makeYYYYMMDD = (value: string): string | null => {
-    if ( typeof value !== 'string' || !value?.trim() ) {
+    if ( !value?.trim() ) {
         console.warn('Invalid input value');
         return null;
     }
@@ -258,7 +258,7 @@ export const makeYYYYMMDD = (value: string): string | null => {
  * @returns 
  */
 export const makeCardNo = (value: string): string | null => {
-    if ( typeof value !== 'string' || !value?.trim() ) {
+    if ( !value?.trim() ) {
         console.warn('Invalid input value');
         return null;
     }
@@ -313,7 +313,7 @@ export const convertMoneyFormat = (value: string | number): string | null => {
  * @returns 
  */
 export const formatNumber = (value: string): string | null => {
-    if ( typeof value !== 'string' || !value?.trim() ) {
+    if ( !value?.trim() ) {
         console.warn('Invalid input value');
         return null;
     }

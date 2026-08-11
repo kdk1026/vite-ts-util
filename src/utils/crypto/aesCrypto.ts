@@ -10,7 +10,7 @@
 import CryptoJS from "crypto-js";
 
 const validateString = (value: string, name: string) => {
-    if ( typeof value !== 'string' || !value?.trim() ) {
+    if ( !value?.trim() ) {
         console.error(`${name}는 유효한 문자열이어야 합니다.`);
         return false;
     }

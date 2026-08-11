@@ -74,12 +74,6 @@ export const deepClone = (source: object, target: Record<keyof any, any>): objec
  * @returns 
  */
 export const deepCloneKeeping = (source: Record<keyof any, any>, target: Record<keyof any, any>): object => {
-    if ( typeof source !== 'object' || source === null 
-            || typeof target !== 'object' || target === null ) {
-        console.warn('Both source and target must be objects (excluding null)');
-        return target;
-    }
-
     for ( const key in source ) {
         if ( Object.hasOwn(source, key) ) {
             if ( typeof source[key] === 'object' && source[key] !== null ) {

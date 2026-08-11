@@ -98,11 +98,6 @@ export const KakaoAuth = {
      * @returns 
      */
     logoutWithKakao: (logoutCallBack: Function): undefined | void => {
-        if ( typeof logoutCallBack !== 'function' ) {
-            console.error("logoutCallBack is not function");
-            return;
-        }
-
         if ( !Kakao.Auth.getAccessToken() ) {
             console.log('Not logged in.');
             return;
@@ -141,12 +136,12 @@ export const NaverAuth = {
      * @param {string} callbackUrl 
      */
     loginWithNaver: (clientId: string, callbackUrl: string) => {
-        if ( typeof clientId !== 'string' || !clientId?.trim() ) {
+        if ( !clientId?.trim() ) {
             console.error('clientId is empty or null.');
             return false;
         }
 
-        if ( typeof callbackUrl !== 'string' || !callbackUrl?.trim() ) {
+        if ( !callbackUrl?.trim() ) {
             console.error('callbackUrl is empty or null.');
             return false;
         }
@@ -194,12 +189,12 @@ export const NaverAuth = {
      * });
      */
     loginWithNaverCallBack: (clientId: string, callbackUrl: string): any => {
-        if ( typeof clientId !== 'string' || !clientId?.trim() ) {
+        if ( !clientId?.trim() ) {
             console.error('clientId is empty or null.');
             return false;
         }
 
-        if ( typeof callbackUrl !== 'string' || !callbackUrl?.trim() ) {
+        if ( !callbackUrl?.trim() ) {
             console.error('callbackUrl is empty or null.');
             return false;
         }
