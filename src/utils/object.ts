@@ -29,6 +29,7 @@ export const shallowCopy = (source: object, target?: object | null): object => {
  * @returns 
  */
 export const shallowClone = (source: object, source2?: object | null): object => {
+    // return Object.assign({}, source, source2);
     return {...source, ...source2};
 };
 
