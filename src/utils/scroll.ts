@@ -9,10 +9,12 @@
  * @param {number} topPosition
  */
 export const scrollTo = (topPosition: number) => {
-    window.scrollTo({
-        top: topPosition,
-        behavior: 'smooth'
-    });
+    setTimeout(() => {
+        window.scrollTo({
+            top: topPosition,
+            behavior: 'smooth'
+        });
+    }, 500);
 };
 
 /**
@@ -21,8 +23,10 @@ export const scrollTo = (topPosition: number) => {
  * @returns 
  */
 export const scrollToTarget = (targetElement: HTMLElement) => {
-    window.scrollTo({
-        top: targetElement.offsetTop,
-        behavior: 'smooth'
-    });
+    setTimeout(() => {
+        window.scrollTo({
+            top: targetElement.offsetTop,
+            behavior: 'smooth'
+        });
+    }, 500);
 };
