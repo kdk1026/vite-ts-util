@@ -304,7 +304,7 @@ export const convertMoneyFormat = (value: string | number): string | null => {
         return null;
     }
 
-    return Number(cleanNum).toLocaleString();
+    return Number(cleanNum).toLocaleString('ko-KR', { maximumFractionDigits: 0 });
 }
 
 /**
